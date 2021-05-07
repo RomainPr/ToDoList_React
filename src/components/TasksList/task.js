@@ -2,15 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-const Task = ({
-  id, label, status, changeStatus,
-}) => (
+const Task = ({ id, label, done, onCheckboxClick }) => (
   <li>
-    <label className={classNames('list-item', { 'list-item--done': status })}>
+    <label className={classNames('list-item', { 'list-item--done': done })}>
       <input
         type="checkbox"
-        checked={status}
-        onClick={() => changeStatus(status)}
+        checked={done}
+        onChange={() => onCheckboxClick(id)}
       />
       {label}
     </label>
@@ -20,8 +18,8 @@ const Task = ({
 Task.propTypes = {
   id: PropTypes.number.isRequired,
   label: PropTypes.string.isRequired,
-  status: PropTypes.func.isRequired,
-  changeStatus: PropTypes.func.isRequired,
+  done: PropTypes.bool.isRequired,
+  onCheckboxClick: PropTypes.func.isRequired,
 };
 
 export default Task;

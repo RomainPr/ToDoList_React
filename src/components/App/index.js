@@ -22,8 +22,7 @@ class App extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChangeStatus = this.handleChangeStatus.bind(this);
-    this.handleUpdateCount = this.handleUpdateCount.bind(this);
+    this.handleCheckboxClic = this.handleCheckboxClic.bind(this);
   }
 
   handleChange(baseValue) {
@@ -70,9 +69,29 @@ class App extends React.Component {
     });
   }
 
-  handleUpdateCount() {}
+  handleCheckboxClic(taskId) {
+    // on doit renvoyer un nouveau tableau
+    // on ne doit pas modifier l'ancien
+    // on sait aussi, que le tableau à copier puis modifier, c'est this.state.tasks
+    // on sait aussi, que l'on doit modifier la case dont l'id correspond à "taskId"
+    // on sait enfin, que, si done = true, alors on met done = false, et vice versa
+    // en gros, on va inverser la valeur de done
 
-  handleChangeStatus() {}
+    const { tasks } = this.state;
+
+    const newTasks = tasks.map((task) => {
+      if (task.id === taskId) {
+        return {
+          ...task,
+          done: !task.done,
+        };
+      }
+      return task;
+    });
+    this.setState({
+      tasks: newTasks,
+    });
+  }
 
   render() {
     const { baseValue, tasks } = this.state;
@@ -100,10 +119,7 @@ class App extends React.Component {
         />
         <Tasks
           tasks={sortedTasks}
-          id={this.state.id}
-          label={this.state.label}
-          status={this.state.status}
-          changeStatus={this.handleChangeStatus}
+          onCheckboxClick={this.handleCheckboxClic}
         />
       </div>
     );

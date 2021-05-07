@@ -6,7 +6,7 @@ import Task from './task';
 import './task.scss';
 
 const Tasks = ({
-  tasks, id, label, status, changeStatus,
+  tasks, onCheckboxClick,
 }) => (
   <ul className="list">
     {tasks.map((task) => (
@@ -14,8 +14,8 @@ const Tasks = ({
         key={task.id}
         id={task.id}
         label={task.label}
-        status={task.done}
-        changeStatus={() => changeStatus(task.done)}
+        done={task.done}
+        onCheckboxClick={() => onCheckboxClick(task.id)}
       />
     ))}
   </ul>
@@ -27,6 +27,7 @@ Tasks.propTypes = {
     label: PropTypes.string.isRequired,
     done: PropTypes.bool.isRequired,
   })).isRequired,
+  onCheckboxClick: PropTypes.func.isRequired,
 };
 
 export default Tasks;
