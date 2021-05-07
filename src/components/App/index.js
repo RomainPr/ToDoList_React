@@ -18,11 +18,22 @@ class App extends React.Component {
     this.state = {
       baseValue: '',
       tasks: TasksData,
+      taskBeeingEdited: -1,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCheckboxClic = this.handleCheckboxClic.bind(this);
+    this.handleTaskDelete = this.handleTaskDelete.bind(this);
+    this.handleMakeTaskEditable = this.handleMakeTaskEditable.bind(this);
+    this.handleEditTask = this.handleEditTask.bind(this);
+    this.handleInputBlur = this.handleInputBlur.bind(this);
+  }
+
+  handleInputBlur() {
+    this.setState({
+      taskBeeingEdited: -1,
+    });
   }
 
   handleChange(baseValue) {
@@ -40,12 +51,23 @@ class App extends React.Component {
   handleSubmit(event) {
     const { baseValue, tasks } = this.state;
 
+    // preventDefault : je bloque le comportement par défaut
+    // du submit
+    // afin que ma page ne soit pas rechargée
+    event.preventDefault();
+
+    // si rien n'a été saisi dans le champ
+    // on arrête tout et on sort de la fonction
+    if (baseValue === '') {
+      return;
+    }
+
     // on récupère un tableau des ids des tâches
     const ids = tasks.map((task) => task.id);
     // je déverse ces ids dans Math.max
-    const maxId = Math.max(...ids);
-
-    event.preventDefault();
+    // note : je n'apelle Math.max, que si j'ai des ids
+    // si j'ai rien, mon id max est 0
+    const maxId = ids.length > 0 ? Math.max(...ids) : 0;
 
     // je vais créer une tâche lorsque l'utilisateur appuie
     // sur la touche entrée
@@ -93,8 +115,54 @@ class App extends React.Component {
     });
   }
 
+  handleTaskDelete(taskId) {
+    const { tasks } = this.state;
+
+    // objectif : supprimer dans le state la tache dont l'id === taskId
+
+    // dans un premier temps, je vais fabriquer un nouveau tableau
+    // qui contient tous les éléments, sauf celui que je souhaite supprimer
+
+    const newTasks = tasks.filter((task) => task.id !== taskId);
+
+    this.setState({
+      tasks: newTasks,
+    });
+  }
+
+  handleMakeTaskEditable(taskId) {
+    this.setState({
+      taskBeeingEdited: taskId,
+    });
+  }
+
+  handleEditTask(taskId, newValue) {
+    // je vais modifier le label de la tache qui a pour id "taskId"
+    // et dedans, je vais mettre "newValue"
+
+    const { tasks } = this.state;
+
+    const newTasks = tasks.map((task) => {
+      if (task.id === taskId) { // si c'est la tache que je veux changer
+        return {
+          // je recopie la tache
+          ...task,
+          // et je change son label
+          label: newValue,
+        };
+      }
+      // sinon, je retourne la tache telle quelle
+      return task;
+    });
+
+    // on envoie setstate pour modifier les taches dans mon state
+    this.setState({
+      tasks: newTasks,
+    });
+  }
+
   render() {
-    const { baseValue, tasks } = this.state;
+    const { baseValue, tasks, taskBeeingEdited } = this.state;
     // je filtre le tableau de taches pour garder que le taches "pas finies"
     // puis je regarde la longueur du tout
     const onGoingTasks = tasks.filter((task) => !task.done).length;
@@ -118,8 +186,13 @@ class App extends React.Component {
           taskNumber={onGoingTasks}
         />
         <Tasks
+          taskIdToEdit={taskBeeingEdited}
           tasks={sortedTasks}
           onCheckboxClick={this.handleCheckboxClic}
+          onDeleteTask={this.handleTaskDelete}
+          onEditButtonClick={this.handleMakeTaskEditable}
+          onEditTask={this.handleEditTask}
+          onInputBlur={this.handleInputBlur}
         />
       </div>
     );

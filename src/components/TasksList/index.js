@@ -6,7 +6,13 @@ import Task from './task';
 import './task.scss';
 
 const Tasks = ({
-  tasks, onCheckboxClick,
+  tasks,
+  onCheckboxClick,
+  onDeleteTask,
+  onEditTask,
+  onEditButtonClick,
+  taskIdToEdit,
+  onInputBlur,
 }) => (
   <ul className="list">
     {tasks.map((task) => (
@@ -16,6 +22,11 @@ const Tasks = ({
         label={task.label}
         done={task.done}
         onCheckboxClick={() => onCheckboxClick(task.id)}
+        onDeleteTask={() => onDeleteTask(task.id)}
+        onEditButtonClick={() => onEditButtonClick(task.id)}
+        taskIdToEdit={taskIdToEdit}
+        onEditTask={() => onEditTask(task.id)}
+        onInputBlur={() => onInputBlur()}
       />
     ))}
   </ul>
@@ -28,6 +39,11 @@ Tasks.propTypes = {
     done: PropTypes.bool.isRequired,
   })).isRequired,
   onCheckboxClick: PropTypes.func.isRequired,
+  onDeleteTask: PropTypes.func.isRequired,
+  onEditButtonClick: PropTypes.func.isRequired,
+  taskIdToEdit: PropTypes.number.isRequired,
+  onEditTask: PropTypes.func.isRequired,
+  onInputBlur: PropTypes.func.isRequired,
 };
 
 export default Tasks;

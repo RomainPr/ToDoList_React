@@ -1,12 +1,37 @@
 .list-item {
-    display: block;
-    background: #eee;
-    border-radius: 3px;
-    padding: 1rem;
-    margin: 0.5rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #eee;
+  border-radius: 3px;
+  padding: 1rem;
+  margin: 0.5rem 0;
+
+  &-input {
+    padding: .5rem 1rem;
+    border: 2px solid #2e5849;
+    border-radius: 5px;
+    color: #29402e;
   }
-  
-  .list-item--done {
+
+  &-edit {
+    margin-right: 0.3rem;
+  }
+
+  &--done {
     opacity: 0.5;
     text-decoration: line-through;
   }
+
+  &-delete,
+  &-edit {
+    border: 1px solid lightgrey;
+    padding: 0.4rem 0.8rem;
+    border-radius: 3px;
+
+    &:hover {
+      background-color: #2e5849;
+      color: white;
+    }
+  }
+}
