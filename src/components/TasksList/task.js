@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 const Task = ({
   id, label, status, changeStatus,
 }) => (
   <li>
-    <label className="list-item list-item--done list-item">
+    <label className={classNames('list-item', { 'list-item--done': status })}>
       <input
         type="checkbox"
+        checked={status}
         onClick={() => changeStatus(status)}
       />
       {label}

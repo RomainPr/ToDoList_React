@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 
 import './counter.scss';
 
-const Counter = ({ numberOfTasks, onUpdateTaskList }) => (
-  <p className="counter">{numberOfTasks} tâches en cours</p>
+const Counter = ({ taskNumber }) => (
+  <p className="counter">{taskNumber} tâches en cours</p>
 );
 
-Counter.propTypes = PropTypes.string.isRequired;
+Counter.propTypes = {
+  taskNumber: PropTypes.number.isRequired,
+};
 
 export default Counter;

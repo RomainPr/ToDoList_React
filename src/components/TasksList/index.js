@@ -12,15 +12,21 @@ const Tasks = ({
     {tasks.map((task) => (
       <Task
         key={task.id}
-        id={id}
-        label={label}
-        done={status}
+        id={task.id}
+        label={task.label}
+        status={task.done}
         changeStatus={() => changeStatus(task.done)}
       />
     ))}
   </ul>
 );
 
-Tasks.propTypes = PropTypes.func.isRequired;
+Tasks.propTypes = {
+  tasks: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    label: PropTypes.string.isRequired,
+    done: PropTypes.bool.isRequired,
+  })).isRequired,
+};
 
 export default Tasks;
