@@ -1,8 +1,11 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-const Task = ({ id, label, done, onCheckboxClick }) => (
+const Task = ({
+  id, label, done, onCheckboxClick,
+}) => (
   <li>
     <label className={classNames('list-item', { 'list-item--done': done })}>
       <input
