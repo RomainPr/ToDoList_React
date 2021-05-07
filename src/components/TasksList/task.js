@@ -26,18 +26,18 @@ const Task = ({
         // Si l'id de la tache correspond a la tache en cours d'édition
         // alors j'affiche l'input pour éditer la tache
         // sinon, j'affiche simplement son nom
-        taskIdToEdit === id ? (
-          <input
-            className="list-item-input"
-            type="text"
-            value={label}
+        taskIdToEdit === id
+          ? (
+            <input
+              className="list-item-input"
+              type="text"
+              value={label}
             // onBlur : appelée lorsque on sort d'un input
-            onBlur={() => onInputBlur()}
-            onChange={(event) => onEditTask(id, event.target.value)}
-          />
-        ) : (
-          label
-        )
+              onBlur={() => onInputBlur()}
+              onChange={(event) => onEditTask(id, event.target.value)}
+            />
+          )
+          : label
       }
       <div>
         <button

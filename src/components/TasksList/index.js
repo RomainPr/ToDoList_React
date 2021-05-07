@@ -25,7 +25,7 @@ const Tasks = ({
         onDeleteTask={() => onDeleteTask(task.id)}
         onEditButtonClick={() => onEditButtonClick(task.id)}
         taskIdToEdit={taskIdToEdit}
-        onEditTask={() => onEditTask(task.id)}
+        onEditTask={(event, val) => onEditTask(event, val)}
         onInputBlur={() => onInputBlur()}
       />
     ))}
